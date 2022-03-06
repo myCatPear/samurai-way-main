@@ -13,7 +13,7 @@ const MyPosts = () => {
                     <button>Remove</button>
                 </div>
                 <div className={classes.posts}>
-                    <Post/>
+                    <Post message={'hello'}/>
                 </div>
             </div>
         </div>
