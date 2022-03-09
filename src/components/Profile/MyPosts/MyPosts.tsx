@@ -4,11 +4,13 @@ import Post from "./Post/Post";
 
 const MyPosts = () => {
     return (
-        <div className={classes.content}>
-            <div>
-                My Posts
+            <div className={classes.postBlock}>
+                <h3>My Posts</h3>
                 <div>
-                    <textarea>1</textarea>
+                    <div>
+                        <textarea>1</textarea>
+                    </div>
+
                     <button>Add post</button>
                     <button>Remove</button>
                 </div>
@@ -16,7 +18,6 @@ const MyPosts = () => {
                     <Post message={'hello'}/>
                 </div>
             </div>
-        </div>
     );
 };
 

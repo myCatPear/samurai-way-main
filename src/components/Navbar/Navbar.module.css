@@ -3,10 +3,13 @@
     background-color: darkslategray;
 }
 
-.item {
-    color: cornsilk;
+.item a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    display: inline-block;
 }
 
-.item a {
-    color: inherit;
+a.active {
+    color:gold;
 }
