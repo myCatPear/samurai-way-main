@@ -10,10 +10,11 @@ import {StateType} from "./redux/state";
 
 type AppProps = {
     state: StateType
-    addPost: (postMessage:string) => void
+    addPost: () => void
+    updatePostText: (newPost:string) => void
 }
 
-const App: React.FC<AppProps> = ({state, addPost}) => {
+const App: React.FC<AppProps> = ({state, addPost, updatePostText}) => {
     return (
         <BrowserRouter>
             <div className={'app-wrapper'}>
@@ -24,6 +25,7 @@ const App: React.FC<AppProps> = ({state, addPost}) => {
                     <Route exact path={"/profile"} render={() => <Profile
                         state={state.profilePage}
                         addPost={addPost}
+                        updatePostText = {updatePostText}
                     />} />
                 </div>
             </div>
