@@ -1,4 +1,4 @@
-const store:StoreType = {
+const store: StoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -21,13 +21,18 @@ const store:StoreType = {
             ]
         }
     },
-    getState() {
-        return this._state
-    },
     _callSubscriber() {
         console.log('state changed')
     },
-    addPost() {
+
+    getState() {
+        return this._state
+    },
+    subscribe(observer: () => void) {
+        this._callSubscriber = observer
+    },
+
+   /* addPost() {
         let newPost: PostsData = {
             id: 5,
             message: this._state.profilePage.newPostText,
@@ -40,20 +45,48 @@ const store:StoreType = {
     updatePostText(newText: string) {
         this._state.profilePage.newPostText = newText
         this._callSubscriber()
-    },
-    subscribe(observer: () => void) {
-        this._callSubscriber = observer
-    },
+    },*/
+
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            let newPost: PostsData = {
+                id: 5,
+                message: this._state.profilePage.newPostText,
+                likesCount: 0
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ''
+            this._callSubscriber()
+        } else if (action.type === 'UPDATE-POST-TEXT') {
+            this._state.profilePage.newPostText = action.newText
+            this._callSubscriber()
+        }
+
+    }
 }
 
 export type StoreType = {
     _state: StateType
-    getState:() => StateType
-    _callSubscriber:() => void
-    addPost:() => void
-    updatePostText:(newText:string) => void
-    subscribe:(callback: () => void) => void
+    getState: () => StateType
+
+    _callSubscriber: () => void
+    subscribe: (callback: () => void) => void
+
+    //addPost: () => void
+   // updatePostText: (newText: string) => void
+    dispatch: (action:ActionsType) => void
 }
+
+export type AddPostActionType = {
+    type:'ADD-POST'
+}
+
+export type UpdatePostTextActionType = {
+    type:'UPDATE-POST-TEXT'
+    newText:string
+}
+
+export type ActionsType = AddPostActionType | UpdatePostTextActionType
 
 export type StateType = {
     profilePage: ProfilePageType
