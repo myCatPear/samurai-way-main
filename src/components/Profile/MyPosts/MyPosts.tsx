@@ -37,6 +37,7 @@ const MyPosts = (props: MyPostsProps) => {
                 <button onClick={addPostHandler}>Add post</button>
                 <button>Remove</button>
             </div>
+
             <div className={classes.posts}>
                 {postsElements}
             </div>
