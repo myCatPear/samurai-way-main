@@ -1,3 +1,6 @@
+const ADD_POST = 'ADD_POST'
+const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT'
+
 const store: StoreType = {
     _state: {
         profilePage: {
@@ -32,23 +35,23 @@ const store: StoreType = {
         this._callSubscriber = observer
     },
 
-   /* addPost() {
-        let newPost: PostsData = {
-            id: 5,
-            message: this._state.profilePage.newPostText,
-            likesCount: 0
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ''
-        this._callSubscriber()
-    },
-    updatePostText(newText: string) {
-        this._state.profilePage.newPostText = newText
-        this._callSubscriber()
-    },*/
+    /* addPost() {
+         let newPost: PostsData = {
+             id: 5,
+             message: this._state.profilePage.newPostText,
+             likesCount: 0
+         }
+         this._state.profilePage.posts.push(newPost)
+         this._state.profilePage.newPostText = ''
+         this._callSubscriber()
+     },
+     updatePostText(newText: string) {
+         this._state.profilePage.newPostText = newText
+         this._callSubscriber()
+     },*/
 
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
+        if (action.type === ADD_POST) {
             let newPost: PostsData = {
                 id: 5,
                 message: this._state.profilePage.newPostText,
@@ -57,12 +60,25 @@ const store: StoreType = {
             this._state.profilePage.posts.push(newPost)
             this._state.profilePage.newPostText = ''
             this._callSubscriber()
-        } else if (action.type === 'UPDATE-POST-TEXT') {
+        } else if (action.type === UPDATE_POST_TEXT) {
             this._state.profilePage.newPostText = action.newText
             this._callSubscriber()
         }
 
     }
+}
+
+export const addPostActionCreator = () => {
+    return {
+        type: ADD_POST
+    } as const
+}
+
+export const updatePostTextActionCreator = (text: string) => {
+    return {
+        type: UPDATE_POST_TEXT,
+        newText: text
+    } as const
 }
 
 export type StoreType = {
@@ -73,20 +89,22 @@ export type StoreType = {
     subscribe: (callback: () => void) => void
 
     //addPost: () => void
-   // updatePostText: (newText: string) => void
-    dispatch: (action:ActionsType) => void
+    // updatePostText: (newText: string) => void
+    dispatch: (action: ActionsType) => void
 }
 
-export type AddPostActionType = {
-    type:'ADD-POST'
-}
+/*export type AddPostActionType = {
+    type:'ADD_POST'
+
 
 export type UpdatePostTextActionType = {
-    type:'UPDATE-POST-TEXT'
+    type:'UPDATE_POST_TEXT'
     newText:string
-}
+}*/
 
-export type ActionsType = AddPostActionType | UpdatePostTextActionType
+
+export type ActionsType = ReturnType<typeof addPostActionCreator>
+    | ReturnType<typeof updatePostTextActionCreator>
 
 export type StateType = {
     profilePage: ProfilePageType
