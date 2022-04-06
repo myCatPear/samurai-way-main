@@ -22,7 +22,10 @@ const App: React.FC<AppProps> = ({state, dispatch}) => {
                 <Header/>
                 <Navbar/>
                 <div className="app-wrapper-content">
-                    <Route exact path={"/dialogs"} render={() => <Dialogs state={state.dialogsPage}/>}/>
+                    <Route exact path={"/dialogs"} render={() => <Dialogs
+                        state={state.dialogsPage}
+                        dispatch={dispatch}
+                    />}/>
                     <Route exact path={"/profile"} render={() => <Profile
                         state={state.profilePage}
                         dispatch={dispatch}

@@ -1,5 +1,7 @@
 const ADD_POST = 'ADD_POST'
 const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT'
+const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY'
+const SEND_MESSAGE = 'SEND_MESSAGE'
 
 const store: StoreType = {
     _state: {
@@ -13,7 +15,9 @@ const store: StoreType = {
         dialogsPage: {
             messages: [
                 {id: 1, message: 'Hello'},
-                {id: 2, message: 'YO'}
+                {id: 2, message: 'YO'},
+                {id: 3, message: 'mda'}
+
             ],
             dialogs: [
                 {id: 1, name: 'Dimych'},
@@ -21,7 +25,8 @@ const store: StoreType = {
                 {id: 3, name: 'Sasha'},
                 {id: 4, name: 'Victor'},
                 {id: 5, name: 'Andrey'},
-            ]
+            ],
+            newMessageBody:''
         }
     },
     _callSubscriber() {
@@ -63,6 +68,15 @@ const store: StoreType = {
         } else if (action.type === UPDATE_POST_TEXT) {
             this._state.profilePage.newPostText = action.newText
             this._callSubscriber()
+        } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
+            this._state.dialogsPage.newMessageBody = action.body
+            //this._state.dialogsPage.messages.push({id:4, message:action.newMessage})
+            this._callSubscriber()
+        } else if (action.type === SEND_MESSAGE) {
+            let body = this._state.dialogsPage.newMessageBody
+            this._state.dialogsPage.newMessageBody = ''
+            this._state.dialogsPage.messages.push({id:4, message:body})
+            this._callSubscriber()
         }
 
     }
@@ -78,6 +92,19 @@ export const updatePostTextActionCreator = (text: string) => {
     return {
         type: UPDATE_POST_TEXT,
         newText: text
+    } as const
+}
+
+export const updateNewMessageBodyCreator = (text: string) => {
+    return {
+        type: UPDATE_NEW_MESSAGE_BODY,
+        body: text
+    } as const
+}
+
+export const sendMessageCreator = () => {
+    return {
+        type: SEND_MESSAGE
     } as const
 }
 
@@ -103,8 +130,11 @@ export type UpdatePostTextActionType = {
 }*/
 
 
-export type ActionsType = ReturnType<typeof addPostActionCreator>
+export type ActionsType =
+    ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof updatePostTextActionCreator>
+    | ReturnType<typeof updateNewMessageBodyCreator>
+    | ReturnType<typeof sendMessageCreator>
 
 export type StateType = {
     profilePage: ProfilePageType
@@ -119,6 +149,7 @@ export type ProfilePageType = {
 export type DialogsPageType = {
     messages: Array<MessageData>
     dialogs: Array<DialogsData>
+    newMessageBody:string
 }
 
 export type PostsData = {
