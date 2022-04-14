@@ -6,24 +6,27 @@ import { sendMessageCreator, updateNewMessageBodyCreator} from "../../redux/dial
 import {ActionsType, DialogsPageType,} from "../../redux/store"
 
 type DialogsPropsType = {
-    state:DialogsPageType
-    dispatch:(action:ActionsType) => void
+    updateNewMessageBody:(body:string) => void
+    sendMessage: () => void
+    dialogsPage: DialogsPageType
 }
 
 const Dialogs = (props:DialogsPropsType) => {
-    let dialogsElement = props.state.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>)
 
-    let messageElements = props.state.messages.map(m => <Message id={m.id} message={m.message}/>)
-    let newMessageBody = props.state.newMessageBody
+    const state = props.dialogsPage
+
+    let dialogsElement = state.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>)
+    let messageElements = state.messages.map(m => <Message id={m.id} message={m.message}/>)
+    let newMessageBody = state.newMessageBody
 
 
     const onChangeMessageBody = (e:ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.currentTarget.value
-        props.dispatch(updateNewMessageBodyCreator(body))
+        props.updateNewMessageBody(body)
     }
 
     const OnSendMessageClickHandler = () => {
-        props.dispatch(sendMessageCreator())
+        props.sendMessage()
     }
 
     return (

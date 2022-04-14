@@ -7,4 +7,9 @@ const reducers = combineReducers({
     dialogsPage:dialogsReducer
 })
 
+
 export const store = createStore(reducers)
+
+
+//определить автоматически тип объекта store
+export type ReducersType = typeof store
