@@ -7,28 +7,39 @@ import {ActionsType, DialogsPageType, ProfilePageType,} from "../../redux/store"
 import Dialogs from "./Dialogs";
 import {EmptyObject, Store} from "redux";
 import {ReducersType} from "../../redux/redux-store";
+import { StoreContext } from '../../StoreContext';
 
 type DialogsContainerPropsType = {
-    store: ReducersType
+
 }
 
 export const DialogsContainer = (props:DialogsContainerPropsType) => {
-    const state = props.store.getState().dialogsPage
 
-    const onChangeMessageBody = (body:string) => {
-        props.store.dispatch(updateNewMessageBodyCreator(body))
-    }
-
-    const OnSendMessageClickHandler = () => {
-        props.store.dispatch(sendMessageCreator())
-    }
 
     return (
-   <Dialogs
-       updateNewMessageBody={onChangeMessageBody}
-       sendMessage={OnSendMessageClickHandler}
-       dialogsPage={state}
-   />
+        <StoreContext.Consumer>
+            {
+            (store) => {
+                const state = store.getState().dialogsPage
+
+                const onChangeMessageBody = (body:string) => {
+                    store.dispatch(updateNewMessageBodyCreator(body))
+                }
+
+                const OnSendMessageClickHandler = () => {
+                    store.dispatch(sendMessageCreator())
+                }
+               return <Dialogs
+                    updateNewMessageBody={onChangeMessageBody}
+                    sendMessage={OnSendMessageClickHandler}
+                    dialogsPage={state}
+                />
+            }
+        }
+
+        </StoreContext.Consumer>
+
+
     );
 };
 

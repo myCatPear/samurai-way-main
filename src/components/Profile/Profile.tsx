@@ -7,20 +7,14 @@ import {EmptyObject, Store} from "redux";
 import {ReducersType} from "../../redux/redux-store";
 
 type ProfileProps = {
-    store: ReducersType
-    //state: ProfilePageType
-   // addPost: () => void
-   // updatePostText: (newText:string) => void
-    //dispatch:(action:ActionsType) => void
+
 }
 
 const Profile = (props: ProfileProps) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPostsContainer
-                store={props.store}
-            />
+            <MyPostsContainer />
         </div>
     );
 };

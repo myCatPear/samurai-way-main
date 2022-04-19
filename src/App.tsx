@@ -10,19 +10,18 @@ import {EmptyObject, Store } from 'redux';
 import {ReducersType} from "./redux/redux-store";
 
 type AppProps = {
-    store: ReducersType
+
 }
 
-const App: React.FC<AppProps> = ({store}) => {
+const App: React.FC<AppProps> = ({}) => {
     return (
         <BrowserRouter>
             <div className={'app-wrapper'}>
                 <Header/>
                 <Navbar/>
                 <div className="app-wrapper-content">
-                    <Route exact path={"/dialogs"} render={() => <DialogsContainer store={store}/>}/>
-                    <Route exact path={"/profile"} render={() => <Profile store={store}
-                    />} />
+                    <Route exact path={"/dialogs"} render={() => <DialogsContainer />}/>
+                    <Route exact path={"/profile"} render={() => <Profile />} />
                 </div>
             </div>
         </BrowserRouter>
