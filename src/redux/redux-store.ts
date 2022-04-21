@@ -12,4 +12,7 @@ export const store = createStore(reducers)
 
 
 //определить автоматически тип объекта store
-export type ReducersType = typeof store
+export type ReduxStoreType = typeof store
+
+//определить тип объекта состояния
+export type AppStateType = ReturnType<typeof reducers>

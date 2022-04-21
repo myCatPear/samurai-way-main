@@ -1,23 +1,24 @@
 import React from 'react';
+import { PostsData } from '../../../redux/profile-reducer';
 import classes from './MyPosts.module.css'
 import Post from "./Post/Post";
-import {ActionsType, PostsData,} from "../../../redux/store";
+import {MyPostPropsType} from "./MyPostsContainer";
 
-type MyPostsProps = {
-    posts: Array<PostsData>
-    newPostText: string
-    updateNewPostText: (text: string) => void
-    addPost: () => void
-}
 
-const MyPosts = (props: MyPostsProps) => {
+// type MyPostsProps = {
+//     posts: Array<PostsData>
+//     newPostText: string
+//     updateNewPostText: (text: string) => void
+//     addPost: () => void
+// }
+
+const MyPosts = (props: MyPostPropsType) => {
     let postsElements = props.posts.map(p => <Post message={p.message} id={p.id} likesCount={p.likesCount}/>)
 
     let newPostElement = React.createRef<HTMLTextAreaElement>()
 
     const onAddPostHandler = () => {
         props.addPost()
-        //   props.dispatch(addPostActionCreator())
     }
 
     const onChangeHandler = () => {

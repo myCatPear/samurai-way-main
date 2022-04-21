@@ -1,7 +1,24 @@
-import {ActionsType, PostsData, ProfilePageType} from "./store";
+import {sendMessageCreator, updateNewMessageBodyCreator} from "./dialogs-reducer";
 
 const ADD_POST = 'ADD_POST'
 const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT'
+
+ export type PostsData = {
+    id: number
+    message: string
+    likesCount: number
+}
+
+export type ProfilePageType = {
+    posts: Array<PostsData>
+    newPostText: string
+}
+
+export type ActionsType =
+    ReturnType<typeof addPostActionCreator>
+    | ReturnType<typeof updatePostTextActionCreator>
+    | ReturnType<typeof updateNewMessageBodyCreator>
+    | ReturnType<typeof sendMessageCreator>
 
 const initialState = {
     posts: [
