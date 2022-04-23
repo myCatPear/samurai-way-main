@@ -5,7 +5,6 @@ import './index.css';
 import App from './App';
 import {Provider} from 'react-redux'
 
-const rerenderEntireTree = () => {
     ReactDOM.render(
         <Provider store={store}>
             <App />
@@ -13,9 +12,3 @@ const rerenderEntireTree = () => {
         ,
         document.getElementById('root')
     );
-}
-
-
-rerenderEntireTree()
-
-store.subscribe(rerenderEntireTree)

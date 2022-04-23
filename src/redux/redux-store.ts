@@ -16,3 +16,8 @@ export type ReduxStoreType = typeof store
 
 //определить тип объекта состояния
 export type AppStateType = ReturnType<typeof reducers>
+
+
+//стучимся до стора с любого места
+// @ts-ignore
+window.store = store
