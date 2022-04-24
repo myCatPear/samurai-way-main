@@ -5,8 +5,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
 import {BrowserRouter, Route} from "react-router-dom";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
-import {EmptyObject, Store } from 'redux';
-import {ReduxStoreType} from "./redux/redux-store";
+import {UsersContainer} from "./components/Users/UsersContainer";
 
 type AppProps = {
 
@@ -21,10 +20,10 @@ const App: React.FC<AppProps> = ({}) => {
                 <div className="app-wrapper-content">
                     <Route exact path={"/dialogs"} render={() => <DialogsContainer />}/>
                     <Route exact path={"/profile"} render={() => <Profile />} />
+                    <Route exact path={"/users"} render={() => <UsersContainer/>} />
                 </div>
             </div>
         </BrowserRouter>
     );
 }
-
 export default App;

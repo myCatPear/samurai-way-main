@@ -1,31 +1,27 @@
-import {addPostActionCreator, updatePostTextActionCreator} from "./profile-reducer";
-
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY'
 const SEND_MESSAGE = 'SEND_MESSAGE'
 
 export type DialogsPageType = {
-    messages: Array<MessageData>
-    dialogs: Array<DialogsData>
-    newMessageBody:string
+    messages: Array<MessageDataType>
+    dialogs: Array<DialogsDataType>
+    newMessageBody: string
 }
 
-type DialogsData = {
+type DialogsDataType = {
     id: number
     name: string
 }
 
-type MessageData = {
+type MessageDataType = {
     id: number
     message: string
 }
 
 export type ActionsType =
-    ReturnType<typeof addPostActionCreator>
-    | ReturnType<typeof updatePostTextActionCreator>
-    | ReturnType<typeof updateNewMessageBodyCreator>
+    ReturnType<typeof updateNewMessageBodyCreator>
     | ReturnType<typeof sendMessageCreator>
 
-const initialState = {
+const initialState:DialogsPageType = {
     messages: [
         {id: 1, message: 'Hello'},
         {id: 2, message: 'YO'},
@@ -39,10 +35,10 @@ const initialState = {
         {id: 4, name: 'Victor'},
         {id: 5, name: 'Andrey'},
     ],
-    newMessageBody:''
+    newMessageBody: ''
 }
 
-export const dialogsReducer = (state:DialogsPageType = initialState, action:ActionsType):DialogsPageType => {
+export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsType): DialogsPageType => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY:
             return {
@@ -54,7 +50,7 @@ export const dialogsReducer = (state:DialogsPageType = initialState, action:Acti
             return {
                 ...state,
                 newMessageBody: '',
-                messages:[...state.messages, {id:4, message:body}]
+                messages: [...state.messages, {id: 4, message: body}]
             }
     }
     return state

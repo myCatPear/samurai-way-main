@@ -1,37 +1,33 @@
-import {sendMessageCreator, updateNewMessageBodyCreator} from "./dialogs-reducer";
-
 const ADD_POST = 'ADD_POST'
 const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT'
 
- export type PostsData = {
+ export type PostsDataType = {
     id: number
     message: string
     likesCount: number
 }
 
 export type ProfilePageType = {
-    posts: Array<PostsData>
+    posts: Array<PostsDataType>
     newPostText: string
 }
 
 export type ActionsType =
     ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof updatePostTextActionCreator>
-    | ReturnType<typeof updateNewMessageBodyCreator>
-    | ReturnType<typeof sendMessageCreator>
 
 const initialState = {
     posts: [
         {id: 1, message: 'Hello', likesCount: 22},
         {id: 2, message: 'YO', likesCount: 33}
     ],
-    newPostText: ''
+    newPostText: '',
 }
 
 export const profileReducer = (state:ProfilePageType = initialState, action:ActionsType) => {
     switch (action.type) {
         case ADD_POST: {
-            const newPost: PostsData = {
+            const newPost: PostsDataType = {
                 id: 5,
                 message: state.newPostText,
                 likesCount: 0

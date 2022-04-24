@@ -1,5 +1,5 @@
 import React from 'react';
-import { PostsData } from '../../../redux/profile-reducer';
+import { PostsDataType } from '../../../redux/profile-reducer';
 import classes from './MyPosts.module.css'
 import Post from "./Post/Post";
 import {MyPostPropsType} from "./MyPostsContainer";
