@@ -1,36 +1,43 @@
 import React from 'react';
 import {UsersPropsType} from './UsersContainer';
 import s from './users.module.css'
+import axios from "axios";
+import avatar from '../../assets/img/ava.png'
 
 export const Users = (props: UsersPropsType) => {
     if (props.users.length === 0) {
-        props.setUsers( [
-                {
-                    id: 1,
-                    fullName: 'Dmitriy',
-                    photoUrl: 'https://www.vokrug.tv/pic/person/e/f/7/9/ef793f7a70a9e3f62f6c673cb58cb538.jpg',
-                    followed: false,
-                    status: "I am a boss",
-                    location: {city: "Minsk", country: "Belarus"}
-                },
-                {
-                    id: 2,
-                    fullName: 'Sasha',
-                    photoUrl: 'https://www.vokrug.tv/pic/person/e/f/7/9/ef793f7a70a9e3f62f6c673cb58cb538.jpg',
-                    followed: true,
-                    status: "I am a boss too",
-                    location: {city: "Moscow", country: "Russia"}
-                },
-                {
-                    id: 3,
-                    fullName: 'Andrew',
-                    photoUrl: 'https://www.vokrug.tv/pic/person/e/f/7/9/ef793f7a70a9e3f62f6c673cb58cb538.jpg',
-                    followed: false,
-                    status: "I am not a boss",
-                    location: {city: "Kiev", country: "Ukraine"}
-                },
-            ]
-        )
+
+        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+            props.setUsers(response.data.items)
+        })
+
+        // props.setUsers( [
+        //         {
+        //             id: 1,
+        //             fullName: 'Dmitriy',
+        //             photoUrl: 'https://www.vokrug.tv/pic/person/e/f/7/9/ef793f7a70a9e3f62f6c673cb58cb538.jpg',
+        //             followed: false,
+        //             status: "I am a boss",
+        //             location: {city: "Minsk", country: "Belarus"}
+        //         },
+        //         {
+        //             id: 2,
+        //             fullName: 'Sasha',
+        //             photoUrl: 'https://www.vokrug.tv/pic/person/e/f/7/9/ef793f7a70a9e3f62f6c673cb58cb538.jpg',
+        //             followed: true,
+        //             status: "I am a boss too",
+        //             location: {city: "Moscow", country: "Russia"}
+        //         },
+        //         {
+        //             id: 3,
+        //             fullName: 'Andrew',
+        //             photoUrl: 'https://www.vokrug.tv/pic/person/e/f/7/9/ef793f7a70a9e3f62f6c673cb58cb538.jpg',
+        //             followed: false,
+        //             status: "I am not a boss",
+        //             location: {city: "Kiev", country: "Ukraine"}
+        //         },
+        //     ]
+        // )
     }
 
     return (
@@ -40,7 +47,7 @@ export const Users = (props: UsersPropsType) => {
                     return <div key={u.id}>
                         <span>
                             <div>
-                                <img src={u.photoUrl} alt="photo" className={s.photo}/>
+                                <img src={u.photos.small === null ? avatar : ""} alt="photo" className={s.photo}/>
                             </div>
                             <div>
                                 {
@@ -55,7 +62,7 @@ export const Users = (props: UsersPropsType) => {
                         <span>
                             <span>
                                 <div>
-                                    {u.fullName}
+                                    {u.name}
                                 </div>
                                 <div>
                                     {u.status}
@@ -63,10 +70,10 @@ export const Users = (props: UsersPropsType) => {
                             </span>
                             <span>
                                 <div>
-                                    {u.location.country}
+                                    {"u.location.country"}
                                 </div>
                                 <div>
-                                    {u.location.city}
+                                    {"u.location.city"}
                                 </div>
                             </span>
                         </span>

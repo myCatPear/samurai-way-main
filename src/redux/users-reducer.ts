@@ -4,11 +4,15 @@ const SET_USERS = 'SET_USERS'
 
 export type UserDataType = {
     id:number
-    fullName:string
-    photoUrl:string
+    name:string
+    photos:PhotosType
     followed:boolean
-    status:string
-    location:LocationData
+    status:string | null
+}
+
+type PhotosType = {
+    small:string | null
+    large:string | null
 }
 
 type LocationData = {
@@ -21,32 +25,7 @@ export type UsersStateType = {
 }
 
 const initialState:UsersStateType = {
-    users: [
-        // {
-        //     id: 1,
-        //     fullName: 'Dmitriy',
-        //     photoUrl: 'https://www.vokrug.tv/pic/person/e/f/7/9/ef793f7a70a9e3f62f6c673cb58cb538.jpg',
-        //     followed: false,
-        //     status: "I am a boss",
-        //     location: {city: "Minsk", country: "Belarus"}
-        // },
-        // {
-        //     id: 2,
-        //     fullName: 'Sasha',
-        //     photoUrl: 'https://www.vokrug.tv/pic/person/e/f/7/9/ef793f7a70a9e3f62f6c673cb58cb538.jpg',
-        //     followed: true,
-        //     status: "I am a boss too",
-        //     location: {city: "Moscow", country: "Russia"}
-        // },
-        // {
-        //     id: 3,
-        //     fullName: 'Andrew',
-        //     photoUrl: 'https://www.vokrug.tv/pic/person/e/f/7/9/ef793f7a70a9e3f62f6c673cb58cb538.jpg',
-        //     followed: false,
-        //     status: "I am not a boss",
-        //     location: {city: "Kiev", country: "Ukraine"}
-        // },
-    ]
+    users: []
 }
 
 export const usersReducer = (state: UsersStateType = initialState, action: ActionType):UsersStateType => {
