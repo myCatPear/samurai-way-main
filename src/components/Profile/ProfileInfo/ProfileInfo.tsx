@@ -1,7 +1,13 @@
 import React from 'react';
 import classes from './ProfileInfo.module.css'
+import {ProfileType} from "../../../redux/profile-reducer";
 
-const ProfileInfo = () => {
+type ProfileInfoType = {
+    profile:ProfileType | null
+}
+
+const ProfileInfo = (props:ProfileInfoType) => {
+    debugger
     return (
             <div>
                 <div>
@@ -10,6 +16,7 @@ const ProfileInfo = () => {
                         alt="fo"/>
                 </div>
                 <div className={classes.profile__description}>
+                    <img src={props.profile?.photos.large} alt="photoHere"/>
                     ava + descr
                 </div>
             </div>
