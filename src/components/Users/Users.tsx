@@ -1,7 +1,7 @@
 import React from 'react';
 import s from "./users.module.css";
 import avatar from "../../assets/img/ava.png";
-import {toggleFollowingProgress, UserDataType} from "../../redux/users-reducer";
+import {follow, toggleFollowingProgress, UserDataType} from "../../redux/users-reducer";
 import {NavLink} from 'react-router-dom';
 import axios from "axios";
 import {userAPI} from "../../api/api";
@@ -12,10 +12,9 @@ type UsersPropsType = {
     currentPage: number,
     onPageChangedHandler: (page: number) => void
     users: Array<UserDataType>
-    unfollow: (id: number) => void
-    follow: (id: number) => void
-    toggleFollowingProgress: (isFollowing: boolean, userID:number) => void
     isFollowingInProgress:Array<number>
+    follow:(id:number) => void
+    unfollow:(id:number) => void
 }
 
 const Users = (props: UsersPropsType) => {
@@ -51,14 +50,14 @@ const Users = (props: UsersPropsType) => {
                                         <button
                                             disabled={props.isFollowingInProgress.some(id => id === u.id)}
                                             onClick={() => {
-                                                props.toggleFollowingProgress(true, u.id)
-                                                userAPI.unfollowUser(u.id)
-                                                    .then(data => {
-                                                        if (data.resultCode === 0) {
-                                                            props.unfollow(u.id)
-                                                        }
-                                                        props.toggleFollowingProgress(false,u.id)
-                                                    })
+                                                props.unfollow(u.id)
+                                                // userAPI.unfollowUser(u.id)
+                                                //     .then(data => {
+                                                //         if (data.resultCode === 0) {
+                                                //             props.unfollow(u.id)
+                                                //         }
+                                                //         props.toggleFollowingProgress(false,u.id)
+                                                //     })
 
                                             }
                                             }>Unfollow
@@ -67,14 +66,15 @@ const Users = (props: UsersPropsType) => {
                                         <button
                                             disabled={props.isFollowingInProgress.some(id => id === u.id)}
                                             onClick={() => {
-                                                props.toggleFollowingProgress(true,u.id)
-                                                userAPI.followUser(u.id)
-                                                    .then(data => {
-                                                        if (data.resultCode === 0) {
-                                                            props.follow(u.id)
-                                                        }
-                                                        props.toggleFollowingProgress(false,u.id)
-                                                    })
+
+                                                props.follow(u.id)
+                                                // userAPI.followUser(u.id)
+                                                //     .then(data => {
+                                                //         if (data.resultCode === 0) {
+                                                //             props.follow(u.id)
+                                                //         }
+                                                //         props.toggleFollowingProgress(false,u.id)
+                                                //     })
                                             }
                                             }>Follow
                                         </button>
