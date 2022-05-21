@@ -1,3 +1,5 @@
+import {authAPI} from "../api/api";
+
 const SET_USER_DATA = 'SET_USER_DATA'
 
 type AuthStateType = {
@@ -41,5 +43,15 @@ export const setAuthUserData = (id: number, email: string, login: string) => {
             login
         }
     } as const
+}
+
+export const getAuthUserData = () => (dispatch:any) => {
+    authAPI.me()
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                const {id, email, login} = response.data.data
+                dispatch(setAuthUserData(id, email, login))
+            }
+        })
 }
 

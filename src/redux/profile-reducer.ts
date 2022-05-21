@@ -1,3 +1,6 @@
+import axios from "axios";
+import { userAPI} from "../api/api";
+
 const ADD_POST = 'ADD_POST'
 const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
@@ -104,4 +107,12 @@ export const setUserProfile = (profile: ProfileType) => {
         type: SET_USER_PROFILE,
         profile
     } as const
+}
+
+
+export const getUserProfile = (userID:string) => (dispatch:any) => {
+    userAPI.getProfile(userID)
+        .then(response => {
+            dispatch(setUserProfile(response.data))
+        })
 }
