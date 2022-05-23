@@ -6,6 +6,7 @@ import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderConteiner";
+import { Login } from './components/login/login';
 
 type AppProps = {
 
@@ -21,6 +22,7 @@ const App: React.FC<AppProps> = ({}) => {
                     <Route exact path={"/dialogs"} render={() => <DialogsContainer />}/>
                     <Route exact path={"/profile/:userID?"} render={() => <ProfileContainer />} />
                     <Route exact path={"/users"} render={() => <UsersContainer/>} />
+                    <Route exact path={"/login"} render={() => <Login/>} />
                 </div>
             </div>
         </BrowserRouter>
