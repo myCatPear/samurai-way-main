@@ -12,6 +12,7 @@ import {
 import Users from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
 import {userAPI} from '../../api/api';
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 type MapStateToPropsType = {
     users: Array<UserDataType>
@@ -92,10 +93,10 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 //     }
 // }
 
-export default connect(mapStateToProps, {
+export default withAuthRedirect(connect(mapStateToProps, {
     setCurrentPage,
     toggleFollowingProgress,
     getUsers,
     follow,
     unfollow,
-})(UsersContainer)
+})(UsersContainer))
