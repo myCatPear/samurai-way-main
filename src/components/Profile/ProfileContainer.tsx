@@ -2,7 +2,7 @@ import React from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {getUserProfile, ProfileType} from '../../redux/profile-reducer';
+import {getStatus, getUserProfile, ProfileType, setStatus, updateStatus} from '../../redux/profile-reducer';
 import {Redirect, RouteComponentProps, withRouter} from 'react-router-dom';
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
@@ -13,7 +13,7 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
         if (!userID) userID = '2'
 
         this.props.getUserProfile(userID)
-
+        this.props.getStatus(userID)
         // axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userID)
         //     .then(response => {
         //         this.props.setUserProfile(response.data)
@@ -25,7 +25,7 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
 
         return (
             <div>
-                <Profile profile={this.props.profile}/>
+                <Profile profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus}/>
             </div>
         )
 
@@ -35,17 +35,20 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
 
 type mapStateToPropsType = {
     profile:ProfileType | null
-
+    status:string
 }
 
 type mapDispatchToPropsType = {
     getUserProfile:(userID:string) => void
+    getStatus:(userID:string) => void
+    updateStatus:(newStatus:string) => void
 }
 
 
 
 const mapStateToProps = (state: AppStateType):mapStateToPropsType => ({
     profile: state.profilePage.profile,
+    status:state.profilePage.status,
 })
 
 type PathParamsType = {
@@ -56,7 +59,9 @@ type ProfilePropsType = RouteComponentProps<PathParamsType> & mapStateToPropsTyp
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {
-        getUserProfile
+        getUserProfile,
+        getStatus,
+        updateStatus
     }),
     withRouter,
 )(ProfileContainer)
