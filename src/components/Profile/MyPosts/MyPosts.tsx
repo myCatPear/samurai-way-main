@@ -1,49 +1,48 @@
 import React from 'react';
-import { PostsDataType } from '../../../redux/profile-reducer';
+import {PostsDataType} from '../../../redux/profile-reducer';
 import classes from './MyPosts.module.css'
 import Post from "./Post/Post";
 import {MyPostPropsType} from "./MyPostsContainer";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
+
+type FormDataType = {
+    newPostText:string
+}
 
 
-// type MyPostsProps = {
-//     posts: Array<PostsData>
-//     newPostText: string
-//     updateNewPostText: (text: string) => void
-//     addPost: () => void
-// }
+const AddNewPostText: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+
+
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <Field name={"newPostText"} component={"textarea"}/>
+            <button>Add post</button>
+        </form>
+    )
+}
+
+const MyPostReduxForm = reduxForm<FormDataType>({
+    form: "addPost"
+})(AddNewPostText)
 
 const MyPosts = (props: MyPostPropsType) => {
-    let postsElements = props.posts.map((p,i) => <Post key={i} message={p.message} id={p.id} likesCount={p.likesCount}/>)
 
-    let newPostElement = React.createRef<HTMLTextAreaElement>()
+    let postsElements = props.posts.map((p, i) => <Post key={i} message={p.message} id={p.id} likesCount={p.likesCount}/>)
 
-    const onAddPostHandler = () => {
-        props.addPost()
-    }
-
-    const onChangeHandler = () => {
-        let text = ''
-        if (newPostElement.current?.value) text = newPostElement.current?.value
-        props.updateNewPostText(text)
+    const onAddPostHandler = (value:FormDataType) => {
+        props.addPost(value.newPostText)
     }
 
     return (
         <div className={classes.postBlock}>
             <h3>My Posts</h3>
-            <div>
-                <div>
-                    <textarea onChange={onChangeHandler} ref={newPostElement} value={props.newPostText}/>
-                </div>
-
-                <button onClick={onAddPostHandler}>Add post</button>
-                <button>Remove</button>
-            </div>
-
+            <MyPostReduxForm onSubmit={onAddPostHandler}/>
             <div className={classes.posts}>
                 {postsElements}
             </div>
         </div>
     );
 };
+
 
 export default MyPosts;
