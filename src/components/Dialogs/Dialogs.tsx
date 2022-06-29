@@ -5,27 +5,13 @@ import Message from "./Message/Message";
 import { DialogsPropsType } from './DialogsContainer';
 import {Redirect} from "react-router-dom";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import { Textarea } from '../common/FormsControl/FormsControls';
+import {MaxLengthCreator, required} from "../../utils/validators/validators";
+import { AddMessageReduxForm, FormDataType } from './AddMessageForm/AddMessageForm';
 
-type FormDataType ={
-    newMessageBody:string
-}
 
-const AddMessageForm :React.FC<InjectedFormProps<FormDataType>> = (props) => {
-    return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field name={"newMessageBody"} component={"textarea"}/>
-            </div>
-            <div>
-                <button>Send</button>
-            </div>
-        </form>
-    )
-}
 
-const AddMessageReduxForm = reduxForm<FormDataType>({
-    form:"addMessageForm"
-})(AddMessageForm)
+
 
 const Dialogs = (props:DialogsPropsType) => {
 
