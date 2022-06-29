@@ -44,7 +44,7 @@ export type ProfilePageType = {
     status: string
 }
 
-export type ActionsType =
+export type ProfileActionsType =
     ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatus>
@@ -58,7 +58,7 @@ const initialState: ProfilePageType = {
     status: ""
 }
 
-export const profileReducer = (state: ProfilePageType = initialState, action: ActionsType) => {
+export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionsType) => {
     switch (action.type) {
         case ADD_POST: {
             const newPost: PostsDataType = {

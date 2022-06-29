@@ -5,7 +5,7 @@ const instance = axios.create({
     withCredentials:true,
     baseURL: `https://social-network.samuraijs.com/api/1.0/`,
     headers:{
-        "API-KEY" : "ecdc6e54-19e0-470a-834c-9d33301a545a"
+        "API-KEY" : "d6a9965b-9508-4ee9-9d27-31daa8d146f5"
     }
 })
 
@@ -43,6 +43,12 @@ export const profileAPI = {
 export const authAPI = {
     me() {
        return instance.get(`auth/me`)
+    },
+    login(email:string,password:string,rememberMe:boolean =false) {
+        return instance.post('auth/login',{email, password, rememberMe})
+    },
+    logout() {
+        return instance.delete('auth/login')
     }
 }
 

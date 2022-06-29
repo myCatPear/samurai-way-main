@@ -44,7 +44,7 @@ const initialState: UsersStateType = {
     followingInProgressList: []
 }
 
-export const usersReducer = (state: UsersStateType = initialState, action: ActionType): UsersStateType => {
+export const usersReducer = (state: UsersStateType = initialState, action: UsersActionType): UsersStateType => {
     switch (action.type) {
         case FOLLOW: {
             return {...state, users: state.users.map(u => u.id === action.payload.userID ? {...u, followed: true} : u)}
@@ -85,7 +85,7 @@ type setCurrentPageACType = ReturnType<typeof setCurrentPage>
 type setTotalUsersCountACType = ReturnType<typeof setTotalUsersCount>
 type setIsFetchingACType = ReturnType<typeof setIsFetching>
 type isFollowingProgressACType = ReturnType<typeof toggleFollowingProgress>
-type ActionType =
+export type UsersActionType =
     followACType
     | unfollowACType
     | setUserACType

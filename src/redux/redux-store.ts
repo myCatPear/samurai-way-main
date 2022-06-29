@@ -1,9 +1,9 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import {profileReducer} from "./profile-reducer";
-import {dialogsReducer} from "./dialogs-reducer";
-import {usersReducer} from "./users-reducer";
-import {authReducer} from "./auth-reducer";
-import thunkMiddleware from "redux-thunk";
+import {ProfileActionsType, profileReducer} from "./profile-reducer";
+import {DialogsActionsType, dialogsReducer} from "./dialogs-reducer";
+import {UsersActionType, usersReducer} from "./users-reducer";
+import {AuthActionType, authReducer} from "./auth-reducer";
+import thunkMiddleware, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import { reducer as formReducer } from 'redux-form'
 
 const reducers = combineReducers({
@@ -24,6 +24,14 @@ export type ReduxStoreType = typeof store
 //определить тип объекта состояния
 export type AppStateType = ReturnType<typeof reducers>
 
+export type AppActionsType = AuthActionType |
+    DialogsActionsType |
+    ProfileActionsType |
+    UsersActionType
+
+export type AppDispatch = ThunkDispatch<AppStateType, unknown, AppActionsType>
+
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, AppActionsType>
 
 //стучимся до стора с любого места
 // @ts-ignore

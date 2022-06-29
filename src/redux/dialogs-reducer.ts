@@ -15,7 +15,7 @@ type MessageDataType = {
     message: string
 }
 
-export type ActionsType =
+export type DialogsActionsType =
      ReturnType<typeof sendMessageCreator>
 
 const initialState:DialogsPageType = {
@@ -34,7 +34,7 @@ const initialState:DialogsPageType = {
     ],
 }
 
-export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsType): DialogsPageType => {
+export const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsActionsType): DialogsPageType => {
     switch (action.type) {
         case SEND_MESSAGE:
             const body = action.newMessage
