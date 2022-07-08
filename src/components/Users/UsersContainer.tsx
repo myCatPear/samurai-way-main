@@ -36,14 +36,6 @@ export type UsersPropsType = MapStateToPropsType & MapToDispatchPropsType
 export class UsersContainer extends React.Component<UsersPropsType> {
     componentDidMount() {
         this.props.getUsers(this.props.currentPage, this.props.pageSize)
-        /*   this.props.setIsFetching(true)
-
-           userAPI.getUsers(this.props.currentPage,this.props.pageSize)
-               .then(data => {
-                   this.props.setIsFetching(false)
-                   this.props.setUser(data.items)
-                   this.props.setTotalUsersCount(data.totalCount)
-               })*/
     }
 
     onPageChangedHandler = (pageNumber: number) => {
@@ -93,10 +85,10 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 //     }
 // }
 
-export default withAuthRedirect(connect(mapStateToProps, {
+export default connect(mapStateToProps, {
     setCurrentPage,
     toggleFollowingProgress,
     getUsers,
     follow,
     unfollow,
-})(UsersContainer))
+})(UsersContainer)

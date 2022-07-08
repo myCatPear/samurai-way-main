@@ -49,7 +49,7 @@ export const setAuthUserData = (id: number | null, email: string | null, login: 
 }
 
 export const getAuthUserData = ():AppThunk => (dispatch) => {
-    authAPI.me()
+    return authAPI.me()
         .then(response => {
             if (response.data.resultCode === 0) {
                 const {id, email, login} = response.data.data
@@ -61,7 +61,7 @@ export const getAuthUserData = ():AppThunk => (dispatch) => {
 export const login = (email:string,password:string,rememberMe:boolean):AppThunk => (dispatch) => {
     authAPI.login(email, password, rememberMe)
         .then(response => {
-            debugger
+
             if (response.data.resultCode === 0) {
                 dispatch(getAuthUserData())
             } else {
