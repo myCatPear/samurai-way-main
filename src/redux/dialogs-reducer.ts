@@ -1,4 +1,4 @@
-const SEND_MESSAGE = 'SEND_MESSAGE'
+const SEND_MESSAGE = 'DIALOGS_REDUCER/SEND_MESSAGE'
 
 export type DialogsPageType = {
     messages: Array<MessageDataType>

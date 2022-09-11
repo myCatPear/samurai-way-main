@@ -12,7 +12,6 @@ const instance = axios.create({
 export const userAPI = {
     getUsers(currentPage:number,pageSize:number = 1)  {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
-            .then(response => response.data)
     },
     unfollowUser (id:number)  {
         return instance.delete(`follow/${id}`)

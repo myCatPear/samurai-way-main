@@ -1,10 +1,7 @@
-import {authAPI} from "../api/api";
-import {Dispatch} from "redux";
 import {AppThunk} from "./redux-store";
-import {stopSubmit} from "redux-form";
 import {getAuthUserData} from "./auth-reducer";
 
-const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS'
+const INITIALIZED_SUCCESS = 'APP_REDUCER/INITIALIZED_SUCCESS'
 
 
 const initialState = {
@@ -36,7 +33,7 @@ export type AppActionType = initializedSuccessType
 
 export const initializeApp = (): AppThunk => (dispatch) => {
     const promise = dispatch(getAuthUserData())
-    // @ts-ignore
+
     promise.then(() => {
         dispatch(initializedSuccess())
     })

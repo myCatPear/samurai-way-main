@@ -5,6 +5,7 @@ import {AppStateType} from "../../redux/redux-store";
 import {getStatus, getUserProfile, ProfileType, setStatus, updateStatus} from '../../redux/profile-reducer';
 import {Redirect, RouteComponentProps, withRouter} from 'react-router-dom';
 import {compose} from "redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 class ProfileContainer extends React.Component<ProfilePropsType> {
     componentDidMount() {
@@ -68,4 +69,5 @@ export default compose<React.ComponentType>(
         updateStatus
     }),
     withRouter,
+    withAuthRedirect
 )(ProfileContainer)
