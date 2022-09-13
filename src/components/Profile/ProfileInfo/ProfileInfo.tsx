@@ -1,28 +1,33 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import classes from './ProfileInfo.module.css'
 import {ProfileType} from "../../../redux/profile-reducer";
 import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
+import avatar from "../../../assets/img/ava.png";
 
 type ProfileInfoType = {
     profile:ProfileType | null
     status:string
     updateStatus:(newStatus:string) => void
+    isOwner:boolean
+    savePhoto:(photo:File)=>void
 }
-
-
 
 const ProfileInfo = (props:ProfileInfoType) => {
 
+    const onMainPhotoInputChange= (e:ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            props.savePhoto(e.target.files[0])
+        }
+    }
+
     return (
             <div>
-                <div>
-                    <img className={classes.profile__img}
-                        src="https://user-images.githubusercontent.com/88069082/149673405-b47f71c1-0777-4038-9247-5b0c9d166f22.jpg"
-                        alt="fo"/>
-                </div>
                 <div className={classes.profile__description}>
-                    <img src={props.profile?.photos.large} alt="photoHere"/>
-                    ava + descr
+                    <img src={props.profile?.photos?.large || avatar} alt="photoHere"/>
+                    {props.isOwner &&
+                        <input
+                        type='file'
+                        onChange={onMainPhotoInputChange}/>}
                     <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
                 </div>
             </div>

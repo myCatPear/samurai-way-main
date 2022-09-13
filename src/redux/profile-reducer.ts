@@ -2,10 +2,13 @@ import axios from "axios";
 import {profileAPI, userAPI} from "../api/api";
 import {Dispatch} from "redux";
 import {AppThunk} from "./redux-store";
+import App from "../App";
+import profile from "../components/Profile/Profile";
 
 const ADD_POST = 'PROFILE_REDUCER/ADD_POST'
 const SET_USER_PROFILE = 'PROFILE_REDUCER/SET_USER_PROFILE'
 const SET_STATUS = 'PROFILE_REDUCER/SET_STATUS'
+const SAVE_PHOTO_SUCCESS = 'PROFILE_REDUCER/SAVE_PHOTO_SUCCESS'
 
 export type PostsDataType = {
     id: number
@@ -30,13 +33,13 @@ type ProfilePhotoType = {
 }
 
 export type ProfileType = {
-    "aboutMe": string
-    "contacts": ProfileContactsType
-    "lookingForAJob": boolean
-    "lookingForAJobDescription": string
-    "fullName": string
-    "userId": number
-    "photos": ProfilePhotoType
+    "aboutMe"?: string
+    "contacts"?: ProfileContactsType
+    "lookingForAJob"?: boolean
+    "lookingForAJobDescription"?: string
+    "fullName"?: string
+    "userId"?: number
+    "photos"?: ProfilePhotoType
 }
 
 export type ProfilePageType = {
@@ -49,6 +52,7 @@ export type ProfileActionsType =
     ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatus>
+    | ReturnType<typeof savePhotoSuccess>
 
 const initialState: ProfilePageType = {
     posts: [
@@ -59,7 +63,7 @@ const initialState: ProfilePageType = {
     status: ""
 }
 
-export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionsType) => {
+export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionsType):ProfilePageType => {
     switch (action.type) {
         case ADD_POST: {
             const newPost: PostsDataType = {
@@ -70,7 +74,6 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
             return {
                 ...state,
                 posts: [newPost, ...state.posts],
-                newPostText: ''
             }
         }
         case SET_USER_PROFILE: {
@@ -86,6 +89,13 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
                 status: action.payload.status
             }
         }
+        case SAVE_PHOTO_SUCCESS:{
+            return {
+                ...state,
+                profile: {...state.profile, photos:action.photos}
+            }
+        }
+
     }
     return state
 }
@@ -113,6 +123,13 @@ export const setStatus = (status: string) => {
     } as const
 }
 
+export const savePhotoSuccess = (photos:{small:string, large:string}) => {
+    return {
+        type: SAVE_PHOTO_SUCCESS,
+        photos
+    } as const
+}
+
 
 export const getUserProfile = (userID: string): AppThunk => async (dispatch) => {
     const response = await userAPI.getProfile(userID)
@@ -130,4 +147,12 @@ export const updateStatus = (newStatus: string) => async (dispatch: Dispatch) =>
     if (res.data.resultCode === 0) {
         dispatch(setStatus(newStatus))
     }
+}
+
+export const savePhoto = (photo:File) => async (dispatch: Dispatch) => {
+const response = await profileAPI.savePhoto(photo)
+    if (response.data.resultCode === 0) {
+        dispatch(savePhotoSuccess(response.data.data.photos))
+    }
+
 }

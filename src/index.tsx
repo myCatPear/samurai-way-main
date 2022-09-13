@@ -5,14 +5,14 @@ import './index.css';
 
 import {Provider} from 'react-redux'
 import App from './App';
-import { BrowserRouter } from 'react-router-dom';
+import {HashRouter} from 'react-router-dom';
 
-    ReactDOM.render(
-        <BrowserRouter>
+ReactDOM.render(
+    <HashRouter>
         <Provider store={store}>
-            <App />
+            <App/>
         </Provider>
-        </BrowserRouter>
-        ,
-        document.getElementById('root')
-    );
+    </HashRouter>
+    ,
+    document.getElementById('root')
+);

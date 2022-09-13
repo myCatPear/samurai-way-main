@@ -27,10 +27,6 @@ const Users = (props: UsersPropsType) => {
     return (
         <div>
             <div>
-                {/*{pages.map((p, i) => {*/}
-                {/*    return <span key={i} className={props.currentPage === p ? s.selectedPage : ""}*/}
-                {/*                 onClick={() => props.onPageChangedHandler(p)}>{p}</span>*/}
-                {/*})}*/}
                 <Paginator totalItemsCount={props.totalUsersCount} pageSize={props.pageSize} currentPage={props.currentPage} onPageChanged={props.onPageChangedHandler} portionSize={10}/>
             </div>
             {
