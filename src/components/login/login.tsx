@@ -25,7 +25,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                        validate={[required]}/>
             </div>
             <div>
-                <Field component={Input} type="checkbox" name={"rememberMe"} validate={[required]}/>remeber me
+                <Field component={Input} type="checkbox" name={"rememberMe"} />remember me
             </div>
             {props.error && <div className={style.formSummaryError}>
                 {props.error}

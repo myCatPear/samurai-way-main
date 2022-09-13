@@ -1,10 +1,10 @@
 import React from 'react';
 import s from "./users.module.css";
 import avatar from "../../assets/img/ava.png";
-import {follow, toggleFollowingProgress, UserDataType} from "../../redux/users-reducer";
+import {UserDataType} from "../../redux/users-reducer";
 import {NavLink} from 'react-router-dom';
-import axios from "axios";
-import {userAPI} from "../../api/api";
+import {Paginator} from "../common/Paginator/Paginator";
+
 
 type UsersPropsType = {
     totalUsersCount: number,
@@ -12,9 +12,9 @@ type UsersPropsType = {
     currentPage: number,
     onPageChangedHandler: (page: number) => void
     users: Array<UserDataType>
-    isFollowingInProgress:Array<number>
-    follow:(id:number) => void
-    unfollow:(id:number) => void
+    isFollowingInProgress: Array<number>
+    follow: (id: number) => void
+    unfollow: (id: number) => void
 }
 
 const Users = (props: UsersPropsType) => {
@@ -27,10 +27,11 @@ const Users = (props: UsersPropsType) => {
     return (
         <div>
             <div>
-                {pages.map((p, i) => {
-                    return <span key={i} className={props.currentPage === p ? s.selectedPage : ""}
-                                 onClick={() => props.onPageChangedHandler(p)}>{p}</span>
-                })}
+                {/*{pages.map((p, i) => {*/}
+                {/*    return <span key={i} className={props.currentPage === p ? s.selectedPage : ""}*/}
+                {/*                 onClick={() => props.onPageChangedHandler(p)}>{p}</span>*/}
+                {/*})}*/}
+                <Paginator totalItemsCount={props.totalUsersCount} pageSize={props.pageSize} currentPage={props.currentPage} onPageChanged={props.onPageChangedHandler} portionSize={10}/>
             </div>
             {
                 props.users.map(u => {
@@ -51,14 +52,6 @@ const Users = (props: UsersPropsType) => {
                                             disabled={props.isFollowingInProgress.some(id => id === u.id)}
                                             onClick={() => {
                                                 props.unfollow(u.id)
-                                                // userAPI.unfollowUser(u.id)
-                                                //     .then(data => {
-                                                //         if (data.resultCode === 0) {
-                                                //             props.unfollow(u.id)
-                                                //         }
-                                                //         props.toggleFollowingProgress(false,u.id)
-                                                //     })
-
                                             }
                                             }>Unfollow
                                         </button>
@@ -68,13 +61,6 @@ const Users = (props: UsersPropsType) => {
                                             onClick={() => {
 
                                                 props.follow(u.id)
-                                                // userAPI.followUser(u.id)
-                                                //     .then(data => {
-                                                //         if (data.resultCode === 0) {
-                                                //             props.follow(u.id)
-                                                //         }
-                                                //         props.toggleFollowingProgress(false,u.id)
-                                                //     })
                                             }
                                             }>Follow
                                         </button>
