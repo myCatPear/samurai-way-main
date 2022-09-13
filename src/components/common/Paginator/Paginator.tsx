@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import s from './Paginator.module.css'
 
+let classNames = require('classnames')
+
 type PaginatorPropsType = {
     totalItemsCount:number,
     pageSize:number,
@@ -39,7 +41,7 @@ export const Paginator:React.FC<PaginatorPropsType> = (props) => {
                     .filter(page => page >= leftPortionPageNumber && page <= rightPortionPageNumber)
                     .map(page => {
                         return <span
-                            className={s.span}
+                            className={`${props.currentPage === page ? s.selectedPage : ""} ${s.span}`}
                             key={page}
                             onClick={() => onPageChanged(page)}
                             >
