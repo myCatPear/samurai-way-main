@@ -1,17 +1,20 @@
-import React, { Suspense } from 'react';
+
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import {Route, withRouter} from "react-router-dom";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
-import HeaderContainer from "./components/Header/HeaderConteiner";
+
 import Login from './components/login/login';
-//import DialogsContainer from './components/Dialogs/DialogsContainer';
 import {connect} from "react-redux";
 import {compose} from 'redux';
 import {initializeApp} from "./redux/app-reducer";
 import {AppStateType} from "./redux/redux-store";
 import {Preloader} from "./components/common/Preloader/Preloader";
+import HeaderContainer from "./components/Header/HeaderConteiner";
+import React, { Suspense } from 'react';
+
+
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 
@@ -26,6 +29,7 @@ class App extends React.Component<AppPropsType> {
         if (!this.props.initialized) {
             return (<Preloader/>)
         }
+
         return (
             <div className={'app-wrapper'}>
                 <HeaderContainer/>
