@@ -60,6 +60,13 @@ const Login = (props: LoginType) => {
 
     );
 }
+
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+    return {
+        isAuth: state.auth.isAuth
+    }
+}
+
 type MapStateToPropsType = {
     isAuth: boolean
 }
@@ -68,11 +75,5 @@ type MapDispatchToPropsType = {
 }
 
 export type LoginType = MapStateToPropsType & MapDispatchToPropsType
-
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
-    return {
-        isAuth: state.auth.isAuth
-    }
-}
 
 export default connect(mapStateToProps, {login})(Login)

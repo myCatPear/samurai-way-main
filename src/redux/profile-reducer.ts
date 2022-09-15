@@ -1,7 +1,7 @@
 import axios from "axios";
 import {profileAPI, userAPI} from "../api/api";
 import {Dispatch} from "redux";
-import {AppThunk} from "./redux-store";
+import {AppStateType, AppThunk} from "./redux-store";
 import App from "../App";
 import profile from "../components/Profile/Profile";
 
@@ -154,5 +154,11 @@ const response = await profileAPI.savePhoto(photo)
     if (response.data.resultCode === 0) {
         dispatch(savePhotoSuccess(response.data.data.photos))
     }
+}
+
+export const saveProfile = (formData:any):AppThunk => async (dispatch,getState:()=>AppStateType) => {
+    const userID = getState().auth.id + '';
+    const response = await profileAPI.saveProfile(formData);
+    dispatch(getUserProfile(userID))
 
 }

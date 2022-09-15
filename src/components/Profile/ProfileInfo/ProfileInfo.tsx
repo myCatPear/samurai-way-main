@@ -1,79 +1,67 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import classes from './ProfileInfo.module.css'
 import {ProfileType} from "../../../redux/profile-reducer";
 import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 import avatar from "../../../assets/img/ava.png";
+import {ProfileData} from "./ProfileData";
+import  ProfileDataForm from "./ProfileDataForm";
 
 type ProfileInfoType = {
-    profile:ProfileType | null
-    status:string
-    updateStatus:(newStatus:string) => void
-    isOwner:boolean
-    savePhoto:(photo:File)=>void
+    profile: ProfileType | null
+    status: string
+    updateStatus: (newStatus: string) => void
+    isOwner: boolean
+    savePhoto: (photo: File) => void
+    saveProfile: (formData:ProfileType) => void
 }
 
-const ProfileInfo = (props:ProfileInfoType) => {
+const ProfileInfo = (props: ProfileInfoType) => {
 
-    const onMainPhotoInputChange= (e:ChangeEvent<HTMLInputElement>) => {
+    const [isEditMode, setIsEditMode] = useState(false)
+
+    const onMainPhotoInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             console.log(e.target.files[0])
             props.savePhoto(e.target.files[0])
         }
     }
 
+    const onFormSubmit = (formData:ProfileType) => {
+        props.saveProfile(formData)
+        setIsEditMode(false)
+    }
+
+    const initialValues = {...props.profile}
+
     return (
-            <div>
-                <div className={classes.profile__description}>
-                    <img src={props.profile?.photos?.large || avatar} alt="photoHere"/>
-                    {props.isOwner &&
-                        <input
+        <div>
+            <div className={classes.profile__description}>
+                <img src={props.profile?.photos?.large || avatar} alt="photoHere"/>
+                {props.isOwner &&
+                    <input
                         type='file'
                         onChange={onMainPhotoInputChange}/>}
+                {
+                    isEditMode
 
-                    <div>
-                        <div>
-                            <b>Fullname</b>: {props.profile?.fullName}
-                        </div>
-                        <div>
-                            <b>Looking for a job</b>: {props.profile?.lookingForAJob ? "yes" : "no"}
-                        </div>
-                        {
-                            props.profile?.lookingForAJob &&
-                            <div>
-                                <b>My professional skills</b>: {props.profile.lookingForAJobDescription}
-                            </div>
-                        }
-                        <div>
-                            <b>About me</b>: {props.profile?.aboutMe}
-                        </div>
-                        <div>
-                            <b>Contacts</b>: {props.profile?.contacts &&
-                            Object.keys(props.profile?.contacts).map(c => {
-
-                                return <Contact
-                                    contactTitle={c}
-                                    // @ts-ignore
-                                    contactValue={props.profile?.contacts[c]}/>
-                        })
-                        }
-                        </div>
-                    </div>
-
-                    <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
-                </div>
+                        ? <ProfileDataForm profile={props.profile} onSubmit={onFormSubmit} initialValues={initialValues}/>
+                        : <ProfileData profile={props.profile} isOwner={props.isOwner} changeEditMode={setIsEditMode}/>
+                }
+                <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
             </div>
+        </div>
     );
 };
 
 type ContactType = {
-    contactTitle:string,
-    contactValue:string
+    contactTitle: string,
+    contactValue: string
 }
 
-const Contact = (obj:ContactType) => {
-return <div>
-    <b>{obj.contactTitle}</b>: {obj.contactValue}
-</div>
+export const Contact = (obj: ContactType) => {
+    return <div>
+        <b>{obj.contactTitle}</b>: {obj.contactValue}
+    </div>
 }
 
 export default ProfileInfo;
