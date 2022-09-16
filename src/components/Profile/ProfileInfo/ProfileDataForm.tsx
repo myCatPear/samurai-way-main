@@ -4,6 +4,7 @@ import {Contact} from './ProfileInfo';
 import {Input, Textarea} from "../../common/FormsControl/FormsControls";
 import {required} from "../../../utils/validators/validators";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import style from "../../common/FormsControl/FormControl.module.css";
 
 type ProfileDataFormType = {
     profile: ProfileType | null
@@ -12,7 +13,8 @@ type ProfileDataFormType = {
 const ProfileDataForm = ( props: ProfileDataFormType & InjectedFormProps<{}, ProfileDataFormType>) => {
     const {
         profile,
-        handleSubmit
+        handleSubmit,
+        error
     } = props
 
     return (
@@ -20,6 +22,9 @@ const ProfileDataForm = ( props: ProfileDataFormType & InjectedFormProps<{}, Pro
             <div>
                 <button type={"submit"}>save</button>
             </div>
+            {error && <div className={style.formSummaryError}>
+                {error}
+            </div>}
             <div>
                 <b>Full name</b>:
                 <Field type="text" placeholder={"Full name"} component={Input} name={"fullName"} value={props.profile?.fullName}/>
@@ -37,12 +42,10 @@ const ProfileDataForm = ( props: ProfileDataFormType & InjectedFormProps<{}, Pro
             </div>
             <div>
                 <b>Contacts</b>: {profile?.contacts &&
-                Object.keys(profile?.contacts).map(c => {
-                    return <Contact
-                        key={c}
-                        contactTitle={c}
-                        // @ts-ignore
-                        contactValue={props.profile?.contacts[c]}/>
+                Object.keys(profile?.contacts).map(key => {
+                    return <div key={key}>
+                       <b>{key}</b> <Field placeholder={key} component={Textarea} name={`contacts.${key}`}/>
+                    </div>
                 })
             }
             </div>

@@ -12,7 +12,7 @@ type ProfilePropsType = {
     updateStatus:(newStatus:string) => void
     isOwner:boolean
     savePhoto:(photo:File) => void
-    saveProfile:(formData:ProfileType) => void
+    saveProfile:(formData:ProfileType) => Promise<{}>
 }
 
 const Profile = (props:ProfilePropsType) => {

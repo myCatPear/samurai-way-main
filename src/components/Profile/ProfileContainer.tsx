@@ -61,7 +61,7 @@ type mapDispatchToPropsType = {
     getStatus: (userID: string) => void
     updateStatus: (newStatus: string) => void
     savePhoto:(photo:File) => void
-    saveProfile:(formData:ProfileType) => void
+    saveProfile:(formData:ProfileType) => Promise<{}>
 }
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
