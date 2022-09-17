@@ -1,7 +1,6 @@
-
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
-import {Route, withRouter} from "react-router-dom";
+import {Redirect, Route, Switch, withRouter} from "react-router-dom";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 
@@ -12,8 +11,7 @@ import {initializeApp} from "./redux/app-reducer";
 import {AppStateType} from "./redux/redux-store";
 import {Preloader} from "./components/common/Preloader/Preloader";
 import HeaderContainer from "./components/Header/HeaderConteiner";
-import React, { Suspense } from 'react';
-
+import React, {Suspense} from 'react';
 
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
@@ -36,10 +34,15 @@ class App extends React.Component<AppPropsType> {
                 <Navbar/>
                 <div className="app-wrapper-content">
                     <Suspense fallback={<Preloader/>}>
-                    <Route exact path={"/dialogs"} render={() => <DialogsContainer/>}/>
-                    <Route exact path={"/profile/:userID?"} render={() => <ProfileContainer/>}/>
-                    <Route exact path={"/users"} render={() => <UsersContainer/>}/>
-                    <Route exact path={"/login"} render={() => <Login/>}/>
+                        <Switch>
+                            <Redirect exact from="/" to={"/profile"}/>
+                            <Route path={"/dialogs"} render={() => <DialogsContainer/>}/>
+                            <Route path={"/profile/:userID?"} render={() => <ProfileContainer/>}/>
+                            <Route path={"/users"} render={() => <UsersContainer/>}/>
+                            <Route path={"/login"} render={() => <Login/>}/>
+                            <Route path={"/*"} render={() => <div>404</div>}/>
+
+                        </Switch>
                     </Suspense>
                 </div>
             </div>
@@ -49,7 +52,7 @@ class App extends React.Component<AppPropsType> {
 }
 
 type mapStateToPropsType = {
-    initialized:boolean
+    initialized: boolean
 }
 
 type mapDispatchToPropsType = {
@@ -58,12 +61,11 @@ type mapDispatchToPropsType = {
 
 type AppPropsType = mapStateToPropsType & mapDispatchToPropsType
 
-const mapStateToProps = (state:AppStateType):mapStateToPropsType => {
+const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
         initialized: state.app.initialized
     }
 }
-
 
 
 export default compose<React.ComponentType>(
