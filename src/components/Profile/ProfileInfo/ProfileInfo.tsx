@@ -38,11 +38,15 @@ const ProfileInfo = (props: ProfileInfoType) => {
     return (
         <div>
             <div className={classes.profile__description}>
-                <img src={props.profile?.photos?.large || avatar} alt="photoHere"/>
+                <img className={classes.profile__img} src={props.profile?.photos?.large || avatar} alt="photoHere"/>
                 {props.isOwner &&
                     <input
                         type='file'
-                        onChange={onMainPhotoInputChange}/>}
+                        onChange={onMainPhotoInputChange}
+                        className={classes.profile__input}
+                    />
+
+                }
                 {
                     isEditMode
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import classes from './Header.module.css';
+import logo from '../../assets/img/logo.png'
 
 
 type HeaderType = {
@@ -13,7 +14,7 @@ const Header = (props:HeaderType) => {
     const {login,isAuth,logout} = props
     return (
         <header className={classes.header}>
-            <img src="https://logos-world.net/wp-content/uploads/2020/12/Lays-Logo.png" alt="photo"/>
+            <img src={logo} alt="photo"/>
             <div className={classes.loginBlock}>
                 {
                     isAuth ?
